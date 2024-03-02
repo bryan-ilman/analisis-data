@@ -4,7 +4,7 @@ import plotly.express as px
 import plotly.graph_objects as go
 
 st.title("Bike Sharing Dashboard")
-data = pd.read_csv("day.csv")
+data = pd.read_csv("../data/day.csv")
 
 st.sidebar.title("Information:")
 st.sidebar.markdown("**Nama: Bryan Raihan 'Ilman**")
