@@ -1,10 +1,14 @@
+import os
+
 import streamlit as st
 import pandas as pd
 import plotly.express as px
 import plotly.graph_objects as go
 
 st.title("Bike Sharing Dashboard")
-data = pd.read_csv("./day.csv")
+
+dir_path = os.path.dirname(os.path.realpath(__file__))
+data = pd.read_csv(os.path.join(dir_path, "day.csv"))
 
 st.sidebar.title("Information:")
 st.sidebar.markdown("**Nama: Bryan Raihan 'Ilman**")
