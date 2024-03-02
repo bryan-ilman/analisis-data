@@ -29,6 +29,9 @@ st.sidebar.markdown('''
 ''')
 st.sidebar.markdown("For more info, visit https://www.kaggle.com/datasets/lakshmi25npathi/bike-sharing-dataset?select=day.csv")
 
+# convert 'dteday' to datetime
+data['dteday'] = pd.to_datetime(data['dteday'])
+
 name_dict = {
     "season": {1: "Spring", 2: "Summer", 3: "Fall", 4: "Winter"},
     "yr": {0: "2011", 1: "2012"},
@@ -36,10 +39,12 @@ name_dict = {
 }
 data = data.replace(name_dict)
 
+monthly_data = data.groupby([data['dteday'].dt.year.rename('Year'), data['dteday'].dt.month.rename('Month')])['cnt'].sum().reset_index()
+
 st.subheader("Bike Rentals Over Time")
 year = st.selectbox("Select Year:", ["2011", "2012"])
-filtered_data = data[data["yr"] == year]
-fig = px.line(filtered_data, x="dteday", y="cnt", title=f"Bike Rentals in {year}", labels={"dteday": 'Year'})
+filtered_data = monthly_data[monthly_data["Year"] == int(year)]
+fig = px.line(filtered_data, x="Month", y="cnt", title=f"Bike Rentals in {year}", labels={"Month": 'Month'})
 st.plotly_chart(fig)
 
 st.subheader("Casual and Registered Users")
